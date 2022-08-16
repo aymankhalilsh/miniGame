@@ -9,7 +9,7 @@ public class Main {
     public static void main(String[] args) throws Exception {
 
         screen  = new Screen();
-        int x = 5; //col
+        int x = 10; //col
         int y = 5;//row
         final char bomb = '\u1F4A'; //3
         final char player = 'X';
