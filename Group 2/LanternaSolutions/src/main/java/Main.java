@@ -1,49 +1,47 @@
 import com.googlecode.lanterna.input.KeyStroke;
 import com.googlecode.lanterna.input.KeyType;
 
+import java.io.IOException;
 import java.util.Random;
 
 public class Main {
     static Screen screen;
 
+    static int x = 3; //col
+    static int y = 7;//row
+    final char bomb = '\u1F4A'; //
+    final char block2 = '\u2588';
+    final static char player = 'X';
+    final static char block = '\u2588';
+
     public static void main(String[] args) throws Exception {
+        screen = new Screen();
 
-        screen  = new Screen();
-        int x = 10; //col
-        int y = 5;//row
-        final char bomb = '\u1F4A'; //3
-        final char player = 'X';
-        final char mountain = '\u26F0';
-        final char river = '\u2F2E'; //(U+2F2E)
-        final char building = 'B';//(U+1F3E2)
-        screen.printToScreen(x,y,player);
+        screen.printToScreen(x, y, player);
+        pirntBoundries();
 
-        // Use obsticles array to print to lanterna
-        for (int i = 0;i<10;i++){
-           /* terminal.setCursorPosition(p.x, p.y);
-            terminal.putCharacter(mountain);*/
-            screen.printToScreen(i+10,10,mountain);
+        for (int i = 0; i < 50; i++) {
+            screen.printToScreen(i+3, 3, block);
+            screen.printToScreen(i+3, 5, block);
+            screen.printToScreen(3, i+10, block);
+            screen.printToScreen(25, i+5, block);
+            screen.printToScreen(i+3, 9, block);
+            screen.printToScreen(i+5, 7, block);
+            screen.printToScreen(3, 3, block);
         }
 
-        for(int i = 0;i<5;i++){
-         /*   terminal.setCursorPosition(p.x, p.y);
-            terminal.putCharacter(river);*/
 
-            screen.printToScreen(i+20,20,river);
-        }
 
-        for(int i = 0;i<10;i++){
-         /*   terminal.setCursorPosition(p.x, p.y);
-            terminal.putCharacter(river);*/
 
-            screen.printToScreen(i+40,10,building);
-        }
 
-        Random r = new Random();
-        Position bombPosition = new Position(r.nextInt(80), r.nextInt(24));
-        screen.printToScreen(bombPosition.x, bombPosition.y,bomb);
 
-        // Task 11
+
+
+
+
+
+
+
         boolean continueReadingInput = true;
         while (continueReadingInput) {
 
@@ -53,16 +51,14 @@ public class Main {
                 keyStroke = screen.getInput();
             } while (keyStroke == null);
 
-
             KeyType type = keyStroke.getKeyType();
             Character c = keyStroke.getCharacter(); // used Character instead of char because it might be null
 
-            System.out.println("keyStroke.getKeyType(): " + type
-                    + " keyStroke.getCharacter(): " + c);
+            System.out.println("keyStroke.getKeyType(): " + type + " keyStroke.getCharacter(): " + c);
 
             if (c == Character.valueOf('q')) {
                 continueReadingInput = false;
-              screen.close();
+                screen.close();
                 System.out.println("quit");
             }
 
@@ -83,24 +79,32 @@ public class Main {
                     break;
             }
 
-            // ***** more than one if else statement solved
+//             ***** more than one if else statement solved
 
-            if (screen.getChar(x,y)==mountain || screen.getChar(x,y)==river|| screen.getChar(x,y)==building) {
+            if (screen.getChar(x, y) == block || screen.getChar(x, y) == block || screen.getChar(x, y) == block) {
                 x = oldX;
                 y = oldY;
+            } else {
+//
+                screen.printToScreen(oldX, oldY, ' ');
+                screen.printToScreen(x, y, player);
             }
-            else {
-
-                screen.printToScreen(oldX,oldY,' ');
-                screen.printToScreen(x,y,player);
-            }
-            if (bombPosition.x == x && bombPosition.y == y) {
-             screen.close();
-                continueReadingInput = false;
-            }
-
-            }
+//            if (bombPosition.x == x && bombPosition.y == y) {
+//             screen.close();
+//                continueReadingInput = false;
+//            }
         }
-
     }
 
+    public static void pirntBoundries() throws IOException {
+        for (int i = 0; i < 78; i++) {                          // printing horizontal boundary
+            screen.printToScreen(i + 1, 24, block);
+            screen.printToScreen(i + 1, 1, block);
+        }
+        for (int i = 0; i < 24; i++) {                          // print vertical boundary
+            screen.printToScreen(1, i + 1, block);
+            screen.printToScreen(79, i + 1, block);
+        }
+    }
+
+}
