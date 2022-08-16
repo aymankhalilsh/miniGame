@@ -30,18 +30,6 @@ public class Main {
             screen.printToScreen(3, 3, block);
         }
 
-
-
-
-
-
-
-
-
-
-
-
-
         boolean continueReadingInput = true;
         while (continueReadingInput) {
 
