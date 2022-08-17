@@ -20,19 +20,22 @@ public class Main {
         final char block2 = '\u2588';
         final char player = 'X';
 
-
         screen = new Screen();
         screen.printToScreen(x, y, player);
-        pirntBoundries();
-
         screen.printToScreen(a, b, arrow);
+
         pirntBoundries();
 
-        Position bombPosition = null;
-        for(int i =3; i<15;i++){
+        Position bombPosition = new Position(x,y);
+        for(int i =0; i<15;i++) {
             Random r = new Random();
-            bombPosition = new Position(r.nextInt(76), r.nextInt(20));
-            screen.printToScreen(bombPosition.x, bombPosition.y,bomb);}
+            bombPosition = new Position(r.nextInt(76) +2, r.nextInt(20)+2);
+            if(screen.getChar(bombPosition.x,bombPosition.y)!=block) {
+                screen.printToScreen(bombPosition.x, bombPosition.y, bomb);
+            }
+        }
+
+        // increase size of the Arrow unicode
 
         boolean continueReadingInput = true;
         while (continueReadingInput) {
@@ -84,9 +87,11 @@ public class Main {
 
 
             Position p = new Position(a, b);
-            if ((bombPosition.x == x && bombPosition.y == y)||(p.x == x && p.y == y)) { // add 2nd bomb statement
-                screen.close();
-                continueReadingInput = false;
+            for (int i = 0; i < 15; i++) {
+                if ((bombPosition.x == x && bombPosition.y == y) || (p.x == x && p.y == y)) { // add 2nd bomb statement
+                    screen.close();
+                    continueReadingInput = false;
+                }
             }
         }
     }
