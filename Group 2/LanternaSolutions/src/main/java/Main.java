@@ -16,12 +16,29 @@ public class Main {
         screen = new Screen();
         screen.printToScreen(x, y, player, screen.RED, screen.BLACK);
         screen.printToScreen(a, b, arrow, screen.GREEN, screen.BLACK);
-//        counting time played
+
+
+
+
+
+
+
+
+
+        //        counting time played
         long ms = System.currentTimeMillis();
         long finish = ms + 60000;
         long timeLeft = (finish - System.currentTimeMillis()) / 1000;
 
         System.out.println("timeLeft" + (finish - System.currentTimeMillis()) / 1000);
+
+
+
+
+
+
+
+
 
         printBoundries();
         mazeObstacles();
