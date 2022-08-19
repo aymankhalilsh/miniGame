@@ -1,47 +1,27 @@
-import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.input.KeyStroke;
 import com.googlecode.lanterna.input.KeyType;
-
 import java.io.IOException;
 import java.util.Random;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-
-import static java.awt.Color.*;
-import static java.util.concurrent.TimeUnit.SECONDS;
-
 public class Main {
-
-
     static Screen screen;
     final static char block = '\u2588';
     final static char player = '\u26F5';
     static int x = 1; //col
     static int y = 22;//row
     static int a = 78; //col
-    static int b = 21;//row
+    static int b = 22;//row
     final static char arrow = '\u2B9E'; //
     final static char bomb = '\u2620'; //
-
     public static void main(String[] args) throws Exception {
         screen = new Screen();
         screen.printToScreen(x, y, player, screen.RED, screen.BLACK);
         screen.printToScreen(a, b, arrow, screen.GREEN, screen.BLACK);
-
+//        counting time played
         long ms = System.currentTimeMillis();
         long finish = ms + 60000;
         long timeLeft = (finish - System.currentTimeMillis()) / 1000;
-        int count = 0;
 
-            if (timeLeft == 0){
-                count++;
-                if (count == 60){
-                    screen.close();
-                }
-        }
-
-//        System.out.println("timeLeft" + (finish - System.currentTimeMillis()) / 1000);
-
+        System.out.println("timeLeft" + (finish - System.currentTimeMillis()) / 1000);
 
         printBoundries();
         mazeObstacles();
@@ -83,48 +63,35 @@ public class Main {
             }
             System.out.println("timeLeft" + (finish - System.currentTimeMillis()) / 1000);
             if (screen.getChar(x, y) == block) {
-
                 x = oldX;
                 y = oldY;
             } else if (screen.getChar(x, y) == bomb) {
-
                 screen.printGameOver(35, 12, " BANG, GAMER OVER!", Screen.RED, Screen.BLACK);
-
                 Thread.sleep(5000);
                 screen.close();
                 continueReadingInput = false;
-
-            }
-
-            else {
-
+            } else {
                 screen.printToScreen(oldX, oldY, ' ', screen.RED, screen.BLACK);
                 screen.printToScreen(x, y, player, screen.RED, screen.BLACK);
-
             }
             Position p = new Position(a, b);
             if ((p.x == x && p.y == y)) {
-
-
-
                 screen.printGameWon(35, 12, "GAME WON!", Screen.GREEN, Screen.BLACK);
-
                 Thread.sleep(5000);
                 screen.close();
                 continueReadingInput = false;
             }
         }
     }
-
     public static void printBoundries() throws IOException {
 
         for (int i = 0; i < 78; i++) {                          // printing horizontal boundary
             screen.printToScreen(i + 1, 23, block, screen.WHITE, screen.BLACK);
-            screen.printToScreen(i + 1, 1, block, screen.WHITE, screen.BLACK);
+            screen.printToScreen(i + 2, 1, block, screen.WHITE, screen.BLACK);
         }
         for (int i = 0; i < 20; i++) {                          // print vertical boundary
             screen.printToScreen(1, i + 1, block, screen.WHITE, screen.BLACK);
-            screen.printToScreen(79, i + 1, block, screen.WHITE, screen.BLACK);
+            screen.printToScreen(79, i + 2, block, screen.WHITE, screen.BLACK);
         }
     }
 
