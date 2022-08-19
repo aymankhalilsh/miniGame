@@ -24,6 +24,8 @@ public class Main {
 
 
 
+
+
         //        counting time played
         long ms = System.currentTimeMillis();
         long finish = ms + 60000;
