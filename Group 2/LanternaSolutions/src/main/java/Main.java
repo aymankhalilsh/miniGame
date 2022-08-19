@@ -28,6 +28,21 @@ public class Main {
         screen.printToScreen(x, y, player, screen.RED, screen.BLACK);
         screen.printToScreen(a, b, arrow, screen.GREEN, screen.BLACK);
 
+        long ms = System.currentTimeMillis();
+        long finish = ms + 60000;
+        long timeLeft = (finish - System.currentTimeMillis()) / 1000;
+        int count = 0;
+
+            if (timeLeft == 0){
+                count++;
+                if (count == 60){
+                    screen.close();
+                }
+        }
+
+//        System.out.println("timeLeft" + (finish - System.currentTimeMillis()) / 1000);
+
+
         printBoundries();
         mazeObstacles();
         bombNumber();
@@ -66,7 +81,9 @@ public class Main {
                     x -= 1;
                     break;
             }
+            System.out.println("timeLeft" + (finish - System.currentTimeMillis()) / 1000);
             if (screen.getChar(x, y) == block) {
+
                 x = oldX;
                 y = oldY;
             } else if (screen.getChar(x, y) == bomb) {
@@ -76,12 +93,18 @@ public class Main {
                 Thread.sleep(5000);
                 screen.close();
                 continueReadingInput = false;
-            } else {
+
+            }
+
+            else {
+
                 screen.printToScreen(oldX, oldY, ' ', screen.RED, screen.BLACK);
                 screen.printToScreen(x, y, player, screen.RED, screen.BLACK);
+
             }
             Position p = new Position(a, b);
             if ((p.x == x && p.y == y)) {
+
 
 
                 screen.printGameWon(35, 12, "GAME WON!", Screen.GREEN, Screen.BLACK);
